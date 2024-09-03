@@ -7,6 +7,13 @@ services:
       - .env
     depends_on:
       - mysql-container
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    volumes:
+      - ./logs/flask:/var/log/flask-app
 
   mysql-container:
     image: mysql:8.0
@@ -17,4 +24,36 @@ services:
       - "3307:3306"  # Mapea el puerto 3306 del contenedor al puerto 3307 de la máquina host
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./loki-config.yml:/etc/loki/loki-config.yaml
+
+  promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - ./promtail-config.yml:/etc/promtail/promtail-config.yaml
+      - /var/log:/var/log  
+    depends_on:
+      - loki
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - loki
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin123
+
+
+
 
