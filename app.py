@@ -32,6 +32,23 @@ class HistorialAdopciones(db.Model):
     fecha = db.Column(db.Date, nullable=False)
     idUsuario = db.Column(db.Integer, db.ForeignKey('usuarios.id'))
     idPerro = db.Column(db.Integer, db.ForeignKey('perros.id'))
+
+@app.route('/')
+def index(): #Añadir página de inicio
+    return """
+    <h1>Bienvenido a la Aplicación de Gestión de Adopciones</h1>
+    <p>Utiliza los siguientes endpoints para interactuar con la API:</p>
+    <ul>
+        <li><strong>GET /usuarios</strong>: Lista de todos los usuarios</li>
+        <li><strong>POST /usuarios</strong>: Añadir un nuevo usuario</li>
+        <li><strong>GET /perros</strong>: Lista de todos los perros</li>
+        <li><strong>POST /perros</strong>: Añadir un nuevo perro</li>
+        <li><strong>GET /historialAdopciones</strong>: Ver historial de adopciones</li>
+        <li><strong>POST /historialAdopciones</strong>: Añadir un historial de adopción</li>
+    </ul>
+    <p>Para más información, consulta la documentación o el archivo README.md.</p>
+    """
+    
 @app.route('/usuarios', methods=['GET'])
 def get_usuarios():
     usuarios = Usuario.query.all()
