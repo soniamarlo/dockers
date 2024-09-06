@@ -73,6 +73,16 @@ docker-compose ps
 ```bash
 docker-compose down
 ```
+4.  La aplicación Flask estará disponible en [http://localhost:8080](http://localhost:8080).
+
+   - **Página de Inicio**: Acceder a [http://localhost:8080](http://localhost:8080) mostrará una página índice con un resumen de los endpoints disponibles.
+   - Puedes interactuar con los siguientes endpoints:
+     - **GET /perros**: Obtiene una lista de todos los perros.
+     - **POST /perros**: Agrega un nuevo perro.
+     - **GET /usuarios**: Obtiene una lista de todos los usuarios.
+     - **POST /usuarios**: Agrega un nuevo usuario.
+     - **GET /historialAdopciones**: Obtiene el historial de adopciones.
+
 ## Añadir datos a la BBDD
 
 Para añadir datos a la base de datos, se utiliza curl para hacer solicitudes HTTP a la API.
@@ -121,3 +131,6 @@ Puedes acceder a los siguientes endpoints:
 - **POST /usuarios**: Agrega un nuevo usuario (requiere un cuerpo de solicitud con los campos necesarios).
 - **GET /historialAdopciones**: Obtiene el historial de adopciones.
 
+## Advertencias importantes
+
+- **Añadir Usuarios antes de Perros**: Antes de añadir un perro, asegúrate de que haya al menos un usuario creado. Esto es necesario porque los perros están vinculados a usuarios mediante una clave foránea. Si intentas añadir un perro sin un usuario asociado, recibirás un error. Esto garantiza la integridad de los datos.
